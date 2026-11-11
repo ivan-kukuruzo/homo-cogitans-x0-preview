@@ -1,11 +1,11 @@
 {
-  "version": "1.5.1",
-  "sourceCommit": "cd8ef7c432c2d5cae537196f09cae67aab59e7ab",
+  "version": "1.5.3",
+  "sourceCommit": "86bf9cf8491594506d8db29f2ca0ac2413e68fcb",
   "files": [
     {
       "path": "app.js",
-      "bytes": 26482,
-      "sha256": "46f20a0060e01a41cd22183f543643f6c7908ef28754f4c43c5b3789fe99f487"
+      "bytes": 28368,
+      "sha256": "1f6ac7465d5e0fdba832c0ff1339552defd75a0ae055b3df66e10ad3e1296aff"
     },
     {
       "path": "application-cards.css",
@@ -244,13 +244,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 53209,
-      "sha256": "28226c82bcdb363da47d58703f0758df2aff1543fabaca81c4e85e6ec1ac82ac"
+      "bytes": 53901,
+      "sha256": "d0d18e53a8c08e3b3180b63e8fd0a0030005b74a9f5e31d7c371789767117a63"
     },
     {
       "path": "intro-logo.css",
-      "bytes": 1325,
-      "sha256": "40bfe2b17cf04a64933e1f4f6e505df5751e0e8df41c8e3c29576293e7d737f6"
+      "bytes": 3377,
+      "sha256": "5a04154eab92829c7c1cc26bcd19ce0a10f9cfce9392225d0ec8671faa0b10c0"
     },
     {
       "path": "logo.css",
@@ -264,8 +264,8 @@
     },
     {
       "path": "research-home.css",
-      "bytes": 21903,
-      "sha256": "c0d5fed603a2b0a9f1412a0d9a5f58dbec69351bf2dc93734d51c511ec943f47"
+      "bytes": 22027,
+      "sha256": "830b043d510657b152ae1a992f6af3c295c84cabf7ec2ebcbb685904104b5a9e"
     },
     {
       "path": "research-home.js",

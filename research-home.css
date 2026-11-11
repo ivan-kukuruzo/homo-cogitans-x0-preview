@@ -4,6 +4,8 @@ html { scrollbar-gutter:stable; }
 .hc-app { --ink:#202124; --yellow:#d8c62a; --calm-blue:#688da5; --steel:#688da5; --muted:#565c62; --line:#97999c; --paper:#f8f9fa; --mono:'JetBrains Mono','Courier New',monospace; --hc-frame-max:1086px; --hc-edge-size:61px; --hc-edge-gap:14px; display:block; color:var(--ink); }
 .hc-app > .sidebar, .hc-app > .mobile-scrim, .hc-app .main-shell > .topbar, .hc-app .main-shell > .site-footer { display:none !important; }
 .hc-app > .main-shell { display:block; min-width:0; }
+/* Programmatic reading focus is silent visually; controls keep their focus rings. */
+#main-content:focus { outline:none; }
 .app-shell.hc-app #main-content, .app-shell.hc-app.blog-view #main-content {
   width: min(
     calc(var(--hc-frame-max) - var(--hc-edge-size) - var(--hc-edge-size) - var(--hc-edge-gap) - var(--hc-edge-gap)),

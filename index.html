@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="blog-home.css">
   <link rel="stylesheet" href="blog-home-overrides.css">
   <link rel="stylesheet" href="logo.css">
-  <link rel="stylesheet" href="intro-logo.css">
-  <link rel="stylesheet" href="research-home.css">
+  <link rel="stylesheet" href="intro-logo.css?v=1.5.3">
+  <link rel="stylesheet" href="research-home.css?v=1.5.3">
   <link rel="stylesheet" href="home-hero.css">
   <link rel="stylesheet" href="forms-accordion.css">
   <link rel="stylesheet" href="theses-accordion.css">
@@ -54,10 +54,18 @@
         <g id="intro-pen-tips" filter="url(#intro-pen-glow)"></g>
       </svg>
       <p class="intro-type" aria-label="НОВАЯ ТЕОРИЯ МЫШЛЕНИЯ"><span id="typed-subtitle"></span><span class="type-caret" aria-hidden="true"></span></p>
+      <form class="intro-access" id="intro-access" autocomplete="off" inert>
+        <label class="visually-hidden" for="intro-password">Введите пароль</label>
+        <input id="intro-password" type="password" inputmode="numeric" enterkeyhint="go" placeholder="ВВЕДИТЕ ПАРОЛЬ" autocomplete="off" aria-describedby="intro-password-error">
+        <button class="intro-access-submit" type="submit" aria-label="Войти">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg>
+        </button>
+        <p class="intro-access-error" id="intro-password-error" role="status"></p>
+      </form>
     </div>
   </section>
 
-  <div class="app-shell hc-app" id="app-shell" aria-hidden="true">
+  <div class="app-shell hc-app" id="app-shell" aria-hidden="true" inert>
     <div class="mobile-scrim" id="mobile-scrim"></div>
     <aside class="sidebar" id="sidebar" hidden inert aria-label="Главное меню исследования">
       <div class="sidebar-top">
@@ -120,7 +128,7 @@
         </div>
       </div>
 
-      <main id="main-content">
+      <main id="main-content" tabindex="-1">
 
         <section class="page-view active" data-view="overview" aria-labelledby="home-title">
           <div class="blog-home hc-research-home" id="blog-home">
@@ -398,9 +406,9 @@
   <script src="essays-index.js" defer></script>
   <script src="essays-outline.js" defer></script>
   <script src="essays-reader.js" defer></script>
-  <script src="research-home.js?v=1.5.1" defer></script>
-  <script src="research-panels.js?v=1.5.1" defer></script>
-  <script src="app.js?v=1.5.1" defer></script>
+  <script src="research-home.js?v=1.5.3" defer></script>
+  <script src="research-panels.js?v=1.5.3" defer></script>
+  <script src="app.js?v=1.5.3" defer></script>
   <script src="forms-accordion.js" defer></script>
   <script src="theses-accordion.js" defer></script>
   <script src="home-section-folds.js" defer></script>

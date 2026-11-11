@@ -36,7 +36,72 @@
 }
 .intro-word {
   width:min(78vw,1130px);
-  margin-bottom:-55px;
+  margin-bottom:max(-55px,-4.3vw);
+}
+/* Match the header's outlined search rail; half the mono subtitle's width. */
+.intro-access {
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  width:26.7857ch;
+  min-width:138px;
+  max-width:calc(100vw - 32px);
+  height:49px;
+  padding:5px 9px;
+  border:1px solid #202124;
+  border-radius:999px;
+  background:transparent;
+  font:400 clamp(7.056px,1.4112vw,20.776px)/1.3 var(--mono);
+  opacity:0;
+  visibility:hidden;
+  /* The same opacity duration/easing as the header's app-shell entrance. */
+  transition:opacity .4s ease;
+}
+.intro.access-visible .intro-access { opacity:1; visibility:visible; }
+.intro-access:focus-within { box-shadow:0 0 0 2px #d8c62a; }
+.intro-access input {
+  flex:1;
+  width:100%;
+  min-width:0;
+  height:100%;
+  padding:0 5px 0 11px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#202124;
+  font:500 10px/1.35 var(--mono);
+  letter-spacing:.012em;
+}
+.intro-access input::placeholder { color:#5c6164; opacity:1; }
+.intro-access input:focus-visible { outline:0; }
+.intro-access-submit {
+  display:grid;
+  place-items:center;
+  flex:none;
+  width:34px;
+  height:37px;
+  padding:8px;
+  border:0;
+  border-radius:999px;
+  background:transparent;
+  color:#202124;
+}
+.intro-access-submit:hover { background:#d8c62a; }
+.intro-access-submit svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.intro-access-error {
+  position:absolute;
+  top:100%;
+  left:50%;
+  width:max-content;
+  max-width:calc(100vw - 32px);
+  margin:10px 0 0;
+  transform:translateX(-50%);
+  color:#51575b;
+  text-align:center;
+  font:400 10px/1.4 var(--mono);
 }
 @media(max-width:740px) {
   .intro-center { gap:7px; transform:translateY(-1.5vh); }
@@ -45,7 +110,14 @@
     height:clamp(78px,23vw,112px);
     margin-bottom:-15px;
   }
-  .intro-word { width:min(98vw,680px); margin-bottom:calc(-28px - .4vw); }
+  .intro-word { width:min(98vw,680px); margin-bottom:max(-28px,-5.1vw); }
+  .intro-access { height:44px; padding:3px 5px; font-size:clamp(6.664px,1.9208vw,14.504px); }
+  .intro-access input { padding-left:8px; font-size:9px; }
+  .intro-access-submit { width:28px; height:36px; padding:5px; }
+}
+@media(max-height:480px) {
+  .intro { overflow-y:auto; padding:16px 0 90px; }
+  .intro-center { transform:none; }
 }
 @media(prefers-reduced-motion:reduce) {
   .intro-logo-particles { display:none; }

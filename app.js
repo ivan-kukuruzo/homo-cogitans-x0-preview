@@ -5,6 +5,9 @@
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const intro = $('#intro');
   const appShell = $('#app-shell');
+  const introAccess = $('#intro-access');
+  const introPassword = $('#intro-password');
+  const introPasswordError = $('#intro-password-error');
   const liveStatus = $('#live-status');
   const NS = 'http://www.w3.org/2000/svg';
   let introFrame = null;
@@ -13,6 +16,7 @@
   let introAnimationStart = null;
   let introLogoParticles = [];
   let logoImagePending = false;
+  let introUnlocked = false;
   let currentChapter = 1;
   let currentMode = 3;
   let lastDialogOpener = null;
@@ -21,6 +25,8 @@
   // by Isaiah Bjork: glyph-based dash drawing, moving pen tip, wavy masked fill.
   // The original React component is not bundled with this static prototype.
   const SPLASH_ONLY = false;
+  // Temporary shared entrance gate for the static preview, not server authentication.
+  const INTRO_PASSWORD = '1991';
   const INTRO_TITLE = 'HOMO COGITANS';
   const INTRO_SUBTITLE = Array.from('НОВАЯ ТЕОРИЯ МЫШЛЕНИЯ');
   const INTRO_DRAW_START = .22;
@@ -202,10 +208,14 @@
   }
 
   function finishIntro(instant = false) {
+    if (!introUnlocked) return;
     stopIntroAnimation();
     appShell.classList.add('visible');
     appShell.setAttribute('aria-hidden', 'false');
+    appShell.inert = false;
     document.body.style.overflow = '';
+    introPassword.value = '';
+    $('#main-content').focus({preventScroll:true});
     if (instant) {
       intro.hidden = true;
       intro.classList.remove('playing', 'typing', 'typed', 'exit');
@@ -229,8 +239,10 @@
     // while keeping the exact completion time of the previously accepted splash.
     const logoStart = INTRO_DRAW_START + (strokeEnd - INTRO_DRAW_START) * .5;
     const logoEnd = typingStart + INTRO_SUBTITLE.length * INTRO_TYPE_INTERVAL * .5 + INTRO_LOGO_DURATION;
-    // Only a short pause after the last animation, then transition to the page.
-    const fadeStart = Math.max(fillEnd, typingEnd, logoEnd) + .15;
+    if (time >= logoStart && !intro.classList.contains('access-visible')) {
+      intro.classList.add('access-visible');
+      introAccess.inert = false;
+    }
     let fullyFilled = true;
 
     introLayout.forEach((letter,index) => {
@@ -278,34 +290,43 @@
     // Keep driving the SVG until BOTH animations have finished. The accelerated
     // typewriter can end before the liquid fill, so ending on typingEnd alone
     // would leave the title partially filled and apparently frozen.
-    if (SPLASH_ONLY && time >= Math.max(strokeEnd, fillEnd, typingEnd, logoEnd)) {
+    if (time >= Math.max(strokeEnd, fillEnd, typingEnd, logoEnd)) {
       introFrame = null;
       return;
     }
-    if (!SPLASH_ONLY && time >= fadeStart) { finishIntro(); return; }
     introFrame = requestAnimationFrame(paintIntroFrame);
   }
 
   function playIntro() {
     stopIntroAnimation();
     intro.hidden = false;
-    intro.classList.remove('playing', 'typing', 'typed', 'exit');
+    introUnlocked = false;
+    introPassword.value = '';
+    introPassword.removeAttribute('aria-invalid');
+    introPasswordError.textContent = '';
+    introAccess.querySelector('button').disabled = false;
+    intro.classList.remove('playing', 'typing', 'typed', 'exit', 'access-visible');
+    introAccess.inert = true;
     $('#typed-subtitle').textContent = '';
     prepareIntroLogo();
     document.body.style.overflow = 'hidden';
     appShell.setAttribute('aria-hidden', 'true');
+    appShell.inert = true;
+    appShell.classList.remove('visible');
     buildIntroLetters();
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      if (SPLASH_ONLY) {
-        introLayout.forEach(({strokeLetter}) => {
-          strokeLetter.style.opacity = '1';
-          strokeLetter.style.strokeDasharray = 'none';
-          strokeLetter.style.strokeDashoffset = '0';
-        });
-        $('#intro-fill-group').removeAttribute('mask');
-        $('#typed-subtitle').textContent = INTRO_SUBTITLE.join('');
-        intro.classList.add('typing', 'typed');
-      } else finishIntro(true);
+      introLayout.forEach(({strokeLetter}) => {
+        strokeLetter.style.opacity = '1';
+        strokeLetter.style.strokeDasharray = 'none';
+        strokeLetter.style.strokeDashoffset = '0';
+      });
+      $('#intro-fill-group').removeAttribute('mask');
+      $('#typed-subtitle').textContent = INTRO_SUBTITLE.join('');
+      intro.classList.add('typing', 'typed');
+      intro.classList.add('access-visible');
+      introAccess.inert = false;
+      paintIntroLogo(1,0,1);
+      intro.focus({preventScroll:true});
       return;
     }
     intro.focus({preventScroll:true});
@@ -545,10 +566,35 @@
       playIntro();
       return;
     }
-    // The splash has no visible controls. Click anywhere or press Escape to skip it.
-    intro.addEventListener('click', () => finishIntro(true));
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && !intro.hidden) finishIntro(true);
+    introAccess.addEventListener('submit', event => {
+      event.preventDefault();
+      if (introUnlocked) return;
+      if (introPassword.value !== INTRO_PASSWORD) {
+        introPassword.setAttribute('aria-invalid', 'true');
+        introPasswordError.textContent = introPassword.value ? 'Неверный пароль. Попробуйте ещё раз.' : 'Введите пароль.';
+        introPassword.focus({preventScroll:true});
+        introPassword.select();
+        return;
+      }
+      introUnlocked = true;
+      introAccess.querySelector('button').disabled = true;
+      finishIntro(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    });
+    introPassword.addEventListener('input', () => {
+      introPassword.removeAttribute('aria-invalid');
+      introPasswordError.textContent = '';
+    });
+    intro.addEventListener('keydown', event => {
+      if (event.key !== 'Tab') return;
+      if (introAccess.inert) { event.preventDefault(); return; }
+      const submit = introAccess.querySelector('button');
+      if (event.shiftKey && (document.activeElement === introPassword || document.activeElement === intro)) {
+        event.preventDefault();
+        submit.focus();
+      } else if (!event.shiftKey && (document.activeElement === submit || document.activeElement === intro)) {
+        event.preventDefault();
+        introPassword.focus();
+      }
     });
     $('#replay-intro').addEventListener('click',playIntro);
     buildMap($('#mode-map'));
