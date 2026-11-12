@@ -1,0 +1,136 @@
+/* Gardari shared privacy choice and legal navigation. Intentionally isolated from site CSS. */
+.gardari-legal-consent[hidden], .gardari-legal-manage[hidden] { display: none !important; }
+.gardari-legal-consent, .gardari-legal-footer, .gardari-legal-requisites, .gardari-legal-policy {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #202124;
+  box-sizing: border-box;
+}
+.gardari-legal-consent *, .gardari-legal-footer *, .gardari-legal-requisites * { box-sizing: border-box; }
+.gardari-legal-consent {
+  position: fixed !important;
+  z-index: 2147483000;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 170px;
+  align-items: center;
+  gap: 18px;
+  width: min(780px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  padding: 15px 17px;
+  margin: 0;
+  border: 1px solid #202124;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 10px 34px rgb(20 20 20 / 22%);
+  text-align: left;
+}
+.gardari-legal-copy { min-width:0; align-self:center; }
+.gardari-legal-copy h2 {
+  margin: 0 0 4px !important;
+  color: #202124;
+  font: 700 14px/1.3 "JetBrains Mono", "Courier New", monospace !important;
+  text-transform: none;
+}
+.gardari-legal-copy h2::before {
+  content:""; display:inline-block; width:9px; height:9px; margin-right:7px; border-radius:50%; background:#d8c62a; border:1px solid #202124;
+}
+.gardari-legal-copy p {
+  margin: 0 !important; padding:0!important;
+  color:#4c5256; font:400 12.5px/1.42 Arial,Helvetica,sans-serif !important;
+  text-align:left!important;
+}
+.gardari-legal-copy a {
+  display:inline-block; margin-top:3px; padding:0;
+  color:#4c5256; font:400 12.5px/1.42 Arial,Helvetica,sans-serif;
+  text-decoration:underline; text-underline-offset:2px;
+}
+.gardari-legal-actions { display:flex; flex-direction:column; justify-content:center; align-items:stretch; gap:7px; min-width:0; }
+.gardari-legal-actions button {
+  cursor:pointer; text-align:center; color:#202124; box-shadow:none; text-transform:none;
+  font-family:"JetBrains Mono","Courier New",monospace;
+}
+.gardari-legal-actions .gardari-legal-allow {
+  display:flex; align-items:center; justify-content:center;
+  min-height:40px; padding:7px 8px;
+  border:1px solid #202124; border-radius:7px; background:#d8c62a;
+  color:#202124; font:700 10px/1.3 "JetBrains Mono","Courier New",monospace;
+}
+.gardari-legal-actions .gardari-legal-deny {
+  display:block; min-height:27px; padding:3px 1px;
+  border:0; border-radius:0; background:transparent;
+  color:#33383b; font:700 10.5px/1.3 "JetBrains Mono","Courier New",monospace;
+  text-decoration:underline; text-underline-offset:2px;
+}
+.gardari-legal-actions .gardari-legal-allow:hover { background:#e7d953; }
+.gardari-legal-actions .gardari-legal-deny:hover { color:#7b6900; background:transparent; }
+.gardari-legal-consent :is(button,a):focus-visible, .gardari-legal-footer :is(button,a,summary):focus-visible {
+ outline:2px solid #21669b; outline-offset:3px;
+}
+.gardari-legal-footer {
+  position: static !important; inset:auto !important;
+  z-index:auto; width:100%; max-width:100%;
+  display:flex; flex-direction:row; align-items:center; justify-content:center;
+  gap:9px 16px; flex-wrap:wrap;
+  min-height:50px; padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px));
+  margin:0; border:0; border-radius:0; background:#fff; box-shadow:none;
+  font:500 10px/1.4 "JetBrains Mono","Courier New",monospace;
+  text-align:center;
+}
+.gardari-legal-footer :is(a,summary,button) {
+  font:500 10px/1.4 "JetBrains Mono","Courier New",monospace;
+  color:#202124; text-decoration:underline; text-underline-offset:3px;
+}
+.gardari-legal-footer a { color:#202124; }
+.gardari-legal-footer :is(button,summary) { cursor:pointer; }
+.gardari-legal-copyright { color:#62696d; white-space:nowrap; }
+.gardari-legal-policy { white-space:nowrap; }
+.gardari-legal-details { position:relative; }
+.gardari-legal-details summary { list-style:none; white-space:nowrap; }
+.gardari-legal-details summary::-webkit-details-marker { display:none; }
+.gardari-legal-details-content {
+  display:block;
+  position:relative;
+  width:min(360px,calc(100vw - 30px)); padding:13px 14px; margin:8px auto 0;
+  background:#fff; border:1px solid #202124; border-radius:9px;
+  text-align:left; color:#202124;
+  font:400 12px/1.5 Arial,Helvetica,sans-serif;
+  box-shadow:0 4px 15px rgb(20 20 20 / 8%);
+}
+.gardari-legal-details-content strong { font:700 12px/1.5 Arial,Helvetica,sans-serif; }
+.gardari-legal-details-content p { margin:7px 0 0; font:400 12px/1.5 Arial,Helvetica,sans-serif; }
+.gardari-legal-details-content a { font:400 12px/1.5 Arial,Helvetica,sans-serif; overflow-wrap:anywhere; }
+.gardari-legal-manage {
+  padding:0; margin:0; min-height:25px;
+  border:0; border-radius:0; background:transparent; box-shadow:none;
+  color:#202124; font:500 10px/1.4 "JetBrains Mono","Courier New",monospace;
+  text-decoration:underline; text-underline-offset:3px; cursor:pointer;
+}
+#site-footer .footer-legal > .gardari-legal-manage,
+#site-footer .footer-legal > .gardari-legal-requisites {
+  display:inline-flex; align-items:center; justify-content:center; padding:8px 0;
+}
+#site-footer .footer-legal > .gardari-legal-manage[hidden] { display:none!important; }
+@media (max-width:620px) {
+  .gardari-legal-consent {
+    grid-template-columns:minmax(0,1fr) 132px;
+    gap:10px; padding:12px 13px;
+  }
+  .gardari-legal-copy h2 { font-size:12px!important; }
+  .gardari-legal-copy p,.gardari-legal-copy a { font-size:12px;line-height:1.35; }
+  .gardari-legal-actions .gardari-legal-allow { font-size:9px; min-height:40px; padding:6px 4px; }
+  .gardari-legal-actions .gardari-legal-deny { font-size:9px; min-height:26px; }
+  .gardari-legal-footer { gap:8px 12px; padding:13px 8px 18px; font-size:9px; }
+  .gardari-legal-footer :is(a,summary,button) { font-size:9px; }
+  .gardari-legal-copyright { font-size:9px; }
+}
+@media (max-width:345px) {
+  .gardari-legal-consent { grid-template-columns:minmax(0,1fr) 110px; gap:8px; padding:11px; }
+  .gardari-legal-copy h2 { font-size:11px!important; }
+  .gardari-legal-copy p,.gardari-legal-copy a { font-size:11px; }
+  .gardari-legal-actions .gardari-legal-allow,.gardari-legal-actions .gardari-legal-deny { font-size:8.5px; }
+  .gardari-legal-footer { gap:7px 9px; }
+  .gardari-legal-footer :is(a,summary,button) { font-size:8.5px; }
+}
